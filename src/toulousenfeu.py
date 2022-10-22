@@ -10,10 +10,9 @@ class Toulousenfeu():
     getNormales with a column and a month will get the specified normale
     
     """
-    def __init__(self, tempNormales,infoClimat,minListRow=0):
+    def __init__(self, tempNormales,infoClimat):
         self.tempNormales = tempNormales
         self.infoClimat = infoClimat
-        self.minListRow = minListRow
         self.monthsNormales = []
         self.monthsNormalesMin = []
         self.monthsNormalesMax = []
@@ -81,6 +80,7 @@ class Toulousenfeu():
         :return: the minimum value
         :rtype: float
         """
+        self.minListRow=0
         list = self.getTodayTemps()
         try :
             originTemp = float(list[0])
@@ -119,4 +119,23 @@ class Toulousenfeu():
             list[iterate+1]
             return min
         except :
+            return
+        
+    def diffNorm(self,text):
+        operator = ""
+        try:
+            match text:
+                case "min":
+                    normale = self.moyNormale(date.today(),self.monthsNormalesMin)
+                    tempReturn = self.findMin()
+                case "max":
+                    normale = self.moyNormale(date.today(),self.monthsNormalesMax)
+                    tempReturn = self.findMax()
+                case _:
+                    print("No matched name for: ",text)
+                    return
+            if tempReturn > normale:
+                operator="+"
+            return (operator+"{:.2f}".format(tempReturn-normale))
+        except:
             return
