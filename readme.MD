@@ -7,9 +7,9 @@ Toulouse'n Feu will return 4 values for the day :
 >Minimum Normale Temp\
 Maximum Normale Temp\
 Maximum for today\
-Minimum for today\
+Minimum for today
 
-Important to note : the minimum is only set if a higher temperature is traced. The maximum temperature can't be set without the minimum.
+Important note : the minimum is only set if a higher temperature is traced. The maximum temperature can't be set without the minimum.
 ## Installation
 To use this bot I recommend to install some python librairies with pip such as :
 >csv\

@@ -1,4 +1,7 @@
-export*
-FICHECLIM*
-synop*
-key.txt
+data/export*
+data/FICHECLIM*
+data/synop*
+data/key.txt
+dist/
+venv/
+docs/
