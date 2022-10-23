@@ -4,24 +4,44 @@ Toulouse'n Feu is a Python app that aims to collect weather informations about t
 Of course it's not gonna be the only goal. I think it would be interesting to see if people are actually interested in this project, as well as showing datas everyday, and every month !
 ## Datas returned
 Toulouse'n Feu will return 4 values for the day :
->Minimum Normale Temp\
-Maximum Normale Temp\
+>Minimum for today\
+Minimum Normale Temp\
 Maximum for today\
-Minimum for today
+Maximum Normale Temp
 
 Important note : the minimum is only set if a higher temperature is traced. The maximum temperature can't be set without the minimum.
-## Installation
-To use this bot I recommend to install some python librairies with pip such as :
->csv\
-urllib.error\
-datetime\
-calendar
 
-Then, you'll have to create an account on [Infoclimat](https://www.infoclimat.fr/) and make it verified.\
-Once created and verified, go to this [link](https://www.infoclimat.fr/opendata/), paste your IP address and generate a token key.\
+It will then inform the state of the tweet. If it could be sent *(a temp file will be created and test if the tweet of today has already been sent)* or not, depending on the temp file or twitter in itself.
+
+![Tweet example](/assets/twitterexample.png)
+
+>Tweet example
+## Installation
+### Python
+This bot uses some librairies that are not automatically installed on a clean python3 install. You can see the file [requirements](/requirements.txt) for a complete list.
+
+### Tweepy
+To actually send tweets the program uses the library [tweepy](https://pypi.org/project/tweepy/). You have to manually create a file named **config.py** with it, you will setup some variables like your API key, secret, and more importantly the Access token and secret.\
+To generate the API Key you actually have to create a Twitter app from the [Twitter dev](https://developer.twitter.com/) page.
+
+>**Your Twitter dev account doesn't have to be your bot's account**
+
+To get the Access tokens, you can simply use yours, or install [twurl](https://github.com/twitter/twurl) and then follow its instructions. (The consumer key is the same as the API in their tutorial)
+
+Finally you'll have to create some variables in the **config.py** :
+```
+API_KEY
+API_KEY_SECRET
+ACCESS_TOKEN
+ACCESS_TOKEN_SECRET
+```
+### Acquire data
+You'll have to create an account on [Infoclimat](https://www.infoclimat.fr/) and make it verified. Once created and verified, go to this [link](https://www.infoclimat.fr/opendata/), paste your IP address and generate a token key. I recommend you to fix your IP address as static. If it's a home server you are hosting, ask your operator.
+
 ![Infoclimat Token](/assets/infoclimattoken.png "Infoclimat's token creation")
-#### Note : *Check that your IP address is static, otherwise the token key will have to be generated everytime your IP changes.*
-Then, create a text file named *key.txt* in the root directory. That's all ! You can launch your Python script and enjoy.
+
+Then, create a text file named *key.txt* in the **data** directory and paste your key into it.
+
 ## Calculating the Normales
 The normales for both maximum and minimum temperatures come from the [MeteoFrance](https://donneespubliques.meteofrance.fr/?fond=produit&id_produit=117&id_rubrique=39)'s website. Unfortunetly I only had access to the datas from 1991 to 2020. Which i'm **sure** are way higher than 10 years before.\
 Contrary to *Infoclimat* I will not compare today's temperatures to the normales of the month. Instead, I will be using an approximation with proportionnality. Every normales are set to the middle of each month. I joint every point using a basic formula :
@@ -34,17 +54,17 @@ Contrary to *Infoclimat* I will not compare today's temperatures to the normales
 | Middle day of the month          | dM            |
 | Middle day of the previous month | dM-1          |
 | Middle day of the next month     | dM+1          |
+
+>For **day** > **middleDay** of the month
 ```
 (Tn)-((d - dM)/(dM + dM+1))*(Tn - TnM+1)
 ```
-<div style="text-align: right">For <b>day</b> > <b>middleDay</b> of the month</div>
-
+>For **middleDay** > **day** of the month
 ```
 (TnM-1)-((d + dM-1)/(dM + dM-1))*(TnM-1 - Tn)
 ```
-<div style="text-align: right">For <b>middleDay</b> > <b>day</b> of the month</div>
-
 This formula over the year could look like this graph :
+
 ![Temp MIN MAX Normales](/assets/tempmin_max_normales.png "Temp MIN MAX Normales")
 *Source: [MeteoFrance](https://donneespubliques.meteofrance.fr/?fond=produit&id_produit=117&id_rubrique=39)\
 Every point is the middle of a month*
@@ -52,7 +72,7 @@ Every point is the middle of a month*
 ```
 [Toulouse'n Feu] : Can't open the file 'key.txt'
 ```
-* The file key.txt isn't created, follow the steps in *Installation*
+* The file data/key.txt isn't created, follow the steps in *Installation*
 
 ```
 [Toulouse'n Feu] : HTTPError
@@ -64,7 +84,7 @@ Every point is the middle of a month*
 ```
 [Toulouse'n Feu] : Wrong token id or ip address
 ```
-* Be sure that your IP Address hasn't changed or that the token id have been correctly copied in the *key.txt* file
+* Be sure that your IP Address hasn't changed or that the token id have been correctly copied in the *data/key.txt* file
 ## Note to contributors
 I'm using sphinx's docstring format. If you want to add any function be sure to check the [documentation](https://www.sphinx-doc.org/en/master/index.html)
 ## Copyright

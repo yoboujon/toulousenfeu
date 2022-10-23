@@ -122,6 +122,12 @@ class Toulousenfeu():
             return
         
     def diffNorm(self,text):
+        """Difference between today's temperature and the normale of the month
+
+        :param text: "min" or "max"
+        :type text: string
+        :rtype: float
+        """
         operator = ""
         try:
             match text:

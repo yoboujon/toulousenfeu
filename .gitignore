@@ -8,3 +8,4 @@ docs/
 src/__pycache__
 __pycache__
 config.py
+data/temp.txt

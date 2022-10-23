@@ -1,4 +1,5 @@
 import csv
+import sys
 
 def readFile(filename,ignore=0,Filedelimiter=","):
     """Read a CSV file and returns its content in the list
@@ -37,3 +38,76 @@ def deleteRow(filename,ignore):
                 fileOut.writerow(row)
             else:
                 ignore-=1
+                
+def createTemp():
+    """Tests if the temp file already exists, if so do nothing
+    otherwise, it will create a new one with min and max set to 0
+    """
+    try:
+        open('data/temp.txt').readline()
+        print("temp file already exists ! Nothing to do.")
+        return
+    except:
+        file = open('data/temp.txt',"a+")
+        file.write("min:0\nmax:0")
+        file.close
+        print("Created temp.txt. If a tweet was sent the data could be loss and it will be resent.")
+                
+def readTemp(text):
+    """read the temp file for a certain line (min or max)
+
+    :param text: "max" or "min", the line to read
+    :type text: string
+    :return: 1 or 0
+    :rtype: int
+    """
+    with tryTemp() as file:
+        match text:
+            case "min":
+                line=0
+            case "max":
+                line=1
+            case _:
+                print("'",text,"' is not in temp.txt")
+                return
+        return int(file.readlines()[line][4])
+
+def setTemp(text,value):
+    """set the value of certain line in the temp file
+
+    :param text: "max" or "min", the line to read
+    :type text: string
+    :param value: 1 or 0
+    :type value: int
+    """
+    with tryTemp() as file:
+        match text:
+            case "min":
+                line=0
+                tempText=file.readlines()[1-line]
+                tempText="min:"+str(value)+"\n"+tempText
+            case "max":
+                line=1
+                tempText=file.readlines()[1-line]
+                tempText+="max:"+str(value)
+            case _:
+                print("'",text,"' is not in temp.txt")
+                return
+        readFile = file.readlines()
+        file.seek(0)
+        for line in readFile:
+            file.truncate()
+        file.write(tempText)
+
+def tryTemp():
+    """internal function, tests if the file exists or can be opened
+
+    :return: file data with read/write permissions
+    :rtype: file
+    """
+    try:
+        open('data/temp.txt','r+').readlines()
+        return open('data/temp.txt','r+')
+    except:
+        print("Can't open the file 'temp.txt, try creating one with createTemp()'")
+        sys.exit()
