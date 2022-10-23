@@ -1,4 +1,6 @@
 # Toulouse'n Feu !
+![Banner](/assets/banner_github.png)
+[![Twitter URL](/assets/followbutton.png)](https://twitter.com/FeuToulouse)
 ## Purpose
 Toulouse'n Feu is a Python app that aims to collect weather informations about today's global warming crisis. Because I *love* cold weather I realised that this autumn is quite hot. The idea of a Twitter bot that reminds everyday the insufficient suffering all human beings are living right now started to grow !\
 Of course it's not gonna be the only goal. I think it would be interesting to see if people are actually interested in this project, as well as showing datas everyday, and every month !
