@@ -1,5 +1,6 @@
 import csv
 import sys
+from datetime import datetime
 
 def readFile(filename,ignore=0,Filedelimiter=","):
     """Read a CSV file and returns its content in the list
@@ -45,7 +46,7 @@ def createTemp():
     """
     try:
         open('data/temp.txt').readline()
-        print("temp file already exists ! Nothing to do.")
+        print((datetime.now()).strftime("[%H:%M:%S]"),"temp file already exists ! Nothing to do.")
         return
     except:
         file = open('data/temp.txt',"a+")
@@ -68,7 +69,7 @@ def readTemp(text):
             case "max":
                 line=1
             case _:
-                print("'",text,"' is not in temp.txt")
+                print((datetime.now()).strftime("[%H:%M:%S]"),"'",text,"' is not in temp.txt")
                 return
         return int(file.readlines()[line][4])
 
@@ -91,7 +92,7 @@ def setTemp(text,value):
                 tempText=file.readlines()[1-line]
                 tempText+="max:"+str(value)
             case _:
-                print("'",text,"' is not in temp.txt")
+                print((datetime.now()).strftime("[%H:%M:%S]"),"'",text,"' is not in temp.txt")
                 return
         readFile = file.readlines()
         file.seek(0)
@@ -109,5 +110,5 @@ def tryTemp():
         open('data/temp.txt','r+').readlines()
         return open('data/temp.txt','r+')
     except:
-        print("Can't open the file 'temp.txt, try creating one with createTemp()'")
+        print((datetime.now()).strftime("[%H:%M:%S]"),"Can't open the file 'temp.txt, try creating one with createTemp()'")
         sys.exit()

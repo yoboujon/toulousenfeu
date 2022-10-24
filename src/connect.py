@@ -1,5 +1,5 @@
 import sys
-from datetime import date
+from datetime import date,datetime
 import requests
 from urllib.error import HTTPError, URLError
 
@@ -14,7 +14,7 @@ class App():
         try :
             self.tokenId = open('data/key.txt').readline()
         except OSError:
-            print("["+self.appName+"] : Can't open the file 'key.txt'")
+            print((datetime.now()).strftime("[%H:%M:%S]"),"["+self.appName+"] : Can't open the file 'key.txt'")
             sys.exit()
 
     def setURL(self):
@@ -31,17 +31,17 @@ class App():
         try :
             open("data/export_infoclimat.csv", "wb").write((requests.get(self.URL)).content)
         except HTTPError as e:
-            print("["+self.appName+"] : HTTPError ("+str(e)+")")
+            print((datetime.now()).strftime("[%H:%M:%S]"),"["+self.appName+"] : HTTPError ("+str(e)+")")
             sys.exit()
         except URLError as e:
-            print("["+self.appName+"] : URLError ("+str(e)+")")
+            print((datetime.now()).strftime("[%H:%M:%S]"),"["+self.appName+"] : URLError ("+str(e)+")")
             sys.exit()
         except NameError :
-            print("["+self.appName+"] : URL not set")
+            print((datetime.now()).strftime("[%H:%M:%S]"),"["+self.appName+"] : URL not set")
             sys.exit()
         except Exception as e:
-            print("["+self.appName+"] : Unexpected Error ("+str(e)+")")
+            print((datetime.now()).strftime("[%H:%M:%S]"),"["+self.appName+"] : Unexpected Error ("+str(e)+")")
             sys.exit()
         if open('data/export_infoclimat.csv').readline() != "# METADATA:\n":
-            print("["+self.appName+"] : Wrong token id or ip address")
+            print((datetime.now()).strftime("[%H:%M:%S]"),"["+self.appName+"] : Wrong token id or ip address")
             sys.exit()

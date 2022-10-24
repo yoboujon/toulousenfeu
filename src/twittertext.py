@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class TwitterText:
     def __init__(self):
         self.emojiContainer = []   
@@ -34,7 +36,7 @@ class TwitterText:
                 case "max":
                     self.textMax=text
                 case _:
-                    print("No matched name for: ",minMax)
+                    print((datetime.now()).strftime("[%H:%M:%S]"),"No matched name for: ",minMax)
                     return
         except:
             return
