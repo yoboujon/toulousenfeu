@@ -107,8 +107,8 @@ class Toulousenfeu():
         :rtype: float
         """
         list = self.getTodayTemps()
-        iterate = self.minListRow
         min = self.findMin()
+        iterate = self.minListRow
         if type(min) == NoneType :
             return
         for temps in list[self.minListRow:]:
