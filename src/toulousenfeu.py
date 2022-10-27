@@ -1,5 +1,6 @@
 from datetime import date
 import calendar
+from time import sleep
 from types import NoneType
 from . import convert
 
@@ -87,11 +88,15 @@ class Toulousenfeu():
         except :
             return
         for temps in list:
-            while originTemp>float(temps):
+            if originTemp == float(temps):
                 originTemp = float(temps)
                 self.minListRow+=1
+            else:
+                while originTemp>float(temps):
+                    originTemp = float(temps)
+                    self.minListRow+=1
         try :
-            list[self.minListRow+1]
+            list[self.minListRow]
             return originTemp
         except :
             return
@@ -112,11 +117,16 @@ class Toulousenfeu():
         if type(min) == NoneType :
             return
         for temps in list[self.minListRow:]:
-            while min<float(temps):
+            if min == float(temps):
                 min = float(temps)
                 iterate+=1
+            else:
+                while min<float(temps):
+                    min = float(temps)
+                    iterate+=1
         try :
-            list[iterate+1]
+            print(min)
+            list[iterate]
             return min
         except :
             return
