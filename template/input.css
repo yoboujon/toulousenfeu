@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    max-width: 500px;
+    max-height: 500px;
+}
+
+.blur-test {
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(16px);
+    height: 10rem;
+    width: 100%;
+    top: 40%;
+    z-index: 10;
+    position: absolute;
+}
+
+.page-header {
+    background-position-y: 50%;
+    background-size: cover;
+    overflow: hidden;
+    height: 50rem;
+    display: flex;
+    position: relative;
+}

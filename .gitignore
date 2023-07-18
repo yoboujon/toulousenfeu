@@ -10,3 +10,4 @@ __pycache__
 config.py
 data/temp.txt
 /target
+output.png
