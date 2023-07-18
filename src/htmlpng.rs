@@ -1,43 +1,43 @@
 use headless_chrome::{
     protocol::cdp::Page::CaptureScreenshotFormatOption, Browser, LaunchOptionsBuilder,
 };
-use std::fs::write;
 use std::env;
 
-pub fn convert_picture() {
+pub fn convert_picture() -> Result<(), Box<dyn std::error::Error>> {
     // Create a new browser instance
-    let browser = Browser::new(LaunchOptionsBuilder::default().build().unwrap()).unwrap();
+    let browser = Browser::new(LaunchOptionsBuilder::default().build()?)?;
 
     // Create a new tab
-    let tab = browser.new_tab().unwrap();
+    let tab = browser.new_tab()?;
 
-    //Get the actual directory
-    let current_dir = env::current_dir().expect("Failed to retrieve the current working directory");
-    println!("Current working directory: {:?}", current_dir);
-
-    // Convert the current directory to a string
-    let current_dir_str = current_dir.to_str().expect("Failed to convert path to string");
+    // Get the actual directory
+    let mut current_dir_str = String::new();
+    match env::current_dir()?.to_str() {
+        Some(result_str) => {
+            current_dir_str = result_str.to_string();
+        }
+        None => {
+            println!("Could not convert to string.");
+        }
+    }
 
     // Concatenate the strings using the + operator
-    let full_path = current_dir_str.to_owned() + "\\template\\input.html";
+    let full_path = format!("{}\\template\\input.html", current_dir_str);
 
     // Create the viewport
     let box_model = tab
-        .navigate_to(full_path.as_str())
-        .unwrap()
-        .wait_for_element("body")
-        .unwrap()
-        .get_box_model()
-        .unwrap();
+        .navigate_to(full_path.as_str())?
+        .wait_for_element("body")?
+        .get_box_model()?;
 
-    let png_data = tab
-        .capture_screenshot(
-            CaptureScreenshotFormatOption::Png,
-            Some(1u32),
-            Some(box_model.margin_viewport()),
-            true,
-        )
-        .unwrap();
+    let png_data = tab.capture_screenshot(
+        CaptureScreenshotFormatOption::Png,
+        None,
+        Some(box_model.margin_viewport()),
+        true,
+    )?;
 
-    write("output.png", &png_data).unwrap();
+    std::fs::write("output.png", &png_data).unwrap();
+
+    Ok(())
 }
