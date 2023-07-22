@@ -2,8 +2,9 @@ use headless_chrome::{
     protocol::cdp::Page::CaptureScreenshotFormatOption, Browser, LaunchOptionsBuilder,
 };
 use std::env;
+use anyhow::Result;
 
-pub fn convert_picture() -> Result<(), Box<dyn std::error::Error>> {
+pub fn convert_picture() -> Result<()> {
     // Create a new browser instance
     let browser = Browser::new(LaunchOptionsBuilder::default().build()?)?;
 
@@ -11,13 +12,13 @@ pub fn convert_picture() -> Result<(), Box<dyn std::error::Error>> {
     let tab = browser.new_tab()?;
 
     // Get the actual directory
-    let mut current_dir_str = String::new();
+    let current_dir_str;
     match env::current_dir()?.to_str() {
         Some(result_str) => {
             current_dir_str = result_str.to_string();
         }
         None => {
-            println!("Could not convert to string.");
+            return Err(anyhow::Error::msg("Could not convert current dir to string."))
         }
     }
 

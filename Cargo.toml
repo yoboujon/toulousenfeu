@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 headless_chrome = "1.0.5"
 image = "0.24.6"
+anyhow = "1.0.72"
