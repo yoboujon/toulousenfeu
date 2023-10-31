@@ -91,5 +91,4 @@ Every point is the middle of a month*
 I'm using sphinx's docstring format. If you want to add any function be sure to check the [documentation](https://www.sphinx-doc.org/en/master/index.html)
 ## Copyright
 Data acquired with the help of [Infoclimat's opendata](https://www.infoclimat.fr/opendata/).\
-Normales Temperature are from [MeteoFrance's public library](https://donneespubliques.meteofrance.fr/?fond=produit&id_produit=117&id_rubrique=39).\
-Readme created with [Markdown Preview Github Styling](https://github.com/mjbvz/vscode-github-markdown-preview-style).
+Normales Temperature are from [MeteoFrance's public library](https://donneespubliques.meteofrance.fr/?fond=produit&id_produit=117&id_rubrique=39).

@@ -1,8 +1,8 @@
 use std::time::Duration;
 use std::thread::sleep;
 
-pub mod htmlpng;
-pub mod csv;
+mod htmlpng;
+mod csv;
 
 fn main() {
     println!("Hello, Toulouse!");
